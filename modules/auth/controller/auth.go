@@ -1,39 +1,90 @@
 package controller
 
 import (
+	"net/url"
+	"strings"
+
 	"github.com/atom-apps/auth/modules/auth/dto"
-	"github.com/atom-providers/jwt"
+	"github.com/casdoor/casdoor-go-sdk/casdoorsdk"
 	"github.com/gofiber/fiber/v2"
+	"golang.org/x/oauth2"
 )
 
 // @provider
 type AuthController struct {
-	jwt *jwt.JWT
+	*Common
+	door *casdoorsdk.Client
 }
 
-// Login by user info
+func (c *AuthController) buildURL(ctx *fiber.Ctx, path string) string {
+	u := url.URL{}
+	u.Scheme = string(ctx.Context().URI().Scheme())
+	u.Host = ctx.Hostname()
+	u.Path = "/" + strings.TrimLeft(path, "/")
+	if ctx.Query("redirect") != "" {
+		u.Query().Add("redirect", ctx.Query("redirect"))
+	}
+	return u.String()
+}
+
+// Signin
 //
-//	@Summary		login
-//	@Description	login
+//	@Summary		signin
+//	@Description	signin
 //	@Tags			Auth
 //	@Accept			json
 //	@Produce		json
-//	@Success		200	{object}	 dto.AuthLoginResponse
-//	@Router			/auths/login [post]
-func (c *AuthController) Login(ctx *fiber.Ctx) (dto.AuthLoginResponse, error) {
-	claim := c.jwt.CreateClaims(jwt.BaseClaims{
-		UserID:   1,
-		TenantID: 1,
-		Role:     "user",
-	})
+//	@Success		301	{string}	string	""
+//	@Router			/auth/signin [get]
+func (c *AuthController) Signin(ctx *fiber.Ctx) error {
+	signinUrl := c.door.GetSigninUrl(c.buildURL(ctx, "/auth/callback/signin"))
+	return ctx.Redirect(signinUrl, fiber.StatusMovedPermanently)
+}
 
-	token, err := c.jwt.CreateToken(claim)
+// Signup
+//
+//	@Summary		signup
+//	@Description	signup
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Router			/auth/signup [get]
+func (c *AuthController) Signup(ctx *fiber.Ctx) error {
+	signupUrl := c.door.GetSignupUrl(false, c.buildURL(ctx, "/auth/callback/signup"))
+	return ctx.Redirect(signupUrl, fiber.StatusMovedPermanently)
+}
+
+// RefreshToken
+//
+//	@Summary		RefreshToken
+//	@Description	RefreshToken
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Router			/auth/refresh-token [post]
+func (c *AuthController) RefreshToken(ctx *fiber.Ctx, body *dto.TokenForm) (*oauth2.Token, error) {
+	_, _, err := c.Claim(ctx, c.door)
 	if err != nil {
-		return dto.AuthLoginResponse{}, err
+		return nil, err
 	}
 
-	return dto.AuthLoginResponse{
-		Token:    token,
-		ExpireAt: claim.ExpiresAt.Time,
-	}, nil
+	return c.door.RefreshOAuthToken(body.Token)
+}
+
+// Logout
+//
+//	@Summary		logout
+//	@Description	logout
+//	@Tags			Auth
+//	@Accept			json
+//	@Produce		json
+//	@Router			/auth/logout [post]
+func (c *AuthController) Logout(ctx *fiber.Ctx) error {
+	_, token, err := c.Claim(ctx, c.door)
+	if err != nil {
+		return err
+	}
+
+	_, err = c.door.DeleteToken(token)
+	return err
 }

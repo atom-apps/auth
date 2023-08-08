@@ -6,6 +6,7 @@ import (
 	 "strings"
 
 	"github.com/atom-apps/auth/modules/auth/controller"
+	"github.com/atom-apps/auth/modules/auth/dto"
 
 	"github.com/gofiber/fiber/v2"
 	. "github.com/rogeecn/fen"
@@ -13,5 +14,8 @@ import (
 
 func routeAuthController(engine fiber.Router, controller *controller.AuthController) {
 	basePath := "/"+engine.(*fiber.Group).Prefix
-	engine.Post(strings.TrimPrefix("/auths/login", basePath), DataFunc(controller.Login))
+	engine.Get(strings.TrimPrefix("/auth/signin", basePath), Func(controller.Signin))
+	engine.Get(strings.TrimPrefix("/auth/signup", basePath), Func(controller.Signup))
+	engine.Post(strings.TrimPrefix("/auth/refresh-token", basePath), DataFunc1(controller.RefreshToken, Body[dto.TokenForm](BodyParamError)))
+	engine.Post(strings.TrimPrefix("/auth/logout", basePath), Func(controller.Logout))
 }

@@ -3,12 +3,15 @@ module github.com/atom-apps/auth
 go 1.19
 
 require (
-	github.com/atom-providers/jwt v0.0.0-20230806074857-2325e341c73e
+	github.com/atom-providers/casdoor v0.0.0-20230801062821-4602c280953c
+	github.com/atom-providers/cert v0.0.0-20230731084601-0ed09233960b
+	github.com/atom-providers/jwt v0.0.0-20230807083334-ca95f630467c
 	github.com/atom-providers/log v0.0.0-20230801062917-0782ea50f3c5
-	github.com/atom-providers/service-http v0.0.0-20230801065331-0ca178a11240
+	github.com/atom-providers/service-http v0.0.0-20230806075931-d82b61b86c44
+	github.com/casdoor/casdoor-go-sdk v0.28.1
 	github.com/gofiber/fiber/v2 v2.48.0
 	github.com/rogeecn/atom v1.0.8
-	github.com/rogeecn/fen v1.0.6
+	github.com/rogeecn/fen v1.0.7
 	github.com/spf13/cobra v1.7.0
 	gorm.io/gen v0.3.23
 	gorm.io/gorm v1.25.2
@@ -25,6 +28,7 @@ require (
 	github.com/go-playground/validator v9.31.0+incompatible // indirect
 	github.com/go-sql-driver/mysql v1.7.0 // indirect
 	github.com/golang-jwt/jwt/v4 v4.5.0 // indirect
+	github.com/golang/protobuf v1.5.3 // indirect
 	github.com/google/uuid v1.3.0 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
 	github.com/inconshreveable/mousetrap v1.1.0 // indirect
@@ -40,6 +44,7 @@ require (
 	github.com/pelletier/go-toml/v2 v2.0.9 // indirect
 	github.com/pkg/errors v0.9.1 // indirect
 	github.com/rivo/uniseg v0.4.4 // indirect
+	github.com/samber/lo v1.38.1 // indirect
 	github.com/sirupsen/logrus v1.8.1 // indirect
 	github.com/spf13/afero v1.9.5 // indirect
 	github.com/spf13/cast v1.5.1 // indirect
@@ -56,10 +61,14 @@ require (
 	go.uber.org/zap v1.24.0 // indirect
 	golang.org/x/exp v0.0.0-20230728194245-b0cb94b80691 // indirect
 	golang.org/x/mod v0.11.0 // indirect
+	golang.org/x/net v0.13.0 // indirect
+	golang.org/x/oauth2 v0.7.0 // indirect
 	golang.org/x/sync v0.3.0 // indirect
 	golang.org/x/sys v0.10.0 // indirect
 	golang.org/x/text v0.11.0 // indirect
 	golang.org/x/tools v0.6.0 // indirect
+	google.golang.org/appengine v1.6.7 // indirect
+	google.golang.org/protobuf v1.31.0 // indirect
 	gopkg.in/ini.v1 v1.67.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 	gorm.io/datatypes v1.1.1-0.20230130040222-c43177d3cf8c // indirect

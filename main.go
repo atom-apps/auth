@@ -7,6 +7,8 @@ import (
 	"log"
 
 	"github.com/atom-apps/auth/modules/auth"
+	"github.com/atom-providers/casdoor"
+	"github.com/atom-providers/cert"
 	"github.com/atom-providers/jwt"
 	serviceHttp "github.com/atom-providers/service-http"
 	"github.com/rogeecn/atom"
@@ -15,7 +17,9 @@ import (
 
 func main() {
 	providers := serviceHttp.Default(
+		cert.DefaultProvider(),
 		jwt.DefaultProvider(),
+		casdoor.DefaultProvider(),
 	).With(
 		auth.Providers(),
 	)
