@@ -9,3 +9,7 @@ type RoleUsersForm struct {
 	Users []string `json:"users"`
 	Role  string   `json:"role"`
 }
+
+type UserForm struct {
+	DisplayName string
+}

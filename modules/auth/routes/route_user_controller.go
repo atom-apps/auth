@@ -16,4 +16,6 @@ func routeUserController(engine fiber.Router, controller *controller.UserControl
 	basePath := "/"+engine.(*fiber.Group).Prefix
 	engine.Get(strings.TrimPrefix("/auth/user/profile", basePath), DataFunc(controller.Profile))
 	engine.Post(strings.TrimPrefix("/auth/user/reset-password", basePath), Func1(controller.ResetPassword, Body[dto.ResetPasswordForm](BodyParamError)))
+	engine.Put(strings.TrimPrefix("/auth/user/force-reset-password/:uuid", basePath), Func2(controller.ForceResetPassword, String("uuid", PathParamError), Body[dto.ResetPasswordForm](BodyParamError)))
+	engine.Put(strings.TrimPrefix("/auth/user/:uuid", basePath), Func2(controller.Update, String("uuid", PathParamError), Body[dto.UserForm](BodyParamError)))
 }
