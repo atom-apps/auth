@@ -36,6 +36,10 @@ func (c *WebhookController) Signup(ctx *fiber.Ctx, body *dto.WebhookForm) error 
 		return err
 	}
 
+	if _, err := c.userMappingSvc.GetByName(ctx.Context(), data.Name); err == nil {
+		return nil
+	}
+
 	return c.userMappingSvc.CreateFromModel(ctx.Context(), &models.UserMapping{
 		UUID: user.Id,
 	})
