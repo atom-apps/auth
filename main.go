@@ -6,10 +6,13 @@ package main
 import (
 	"log"
 
+	_ "github.com/go-gormigrate/gormigrate/v2"
+
+	"github.com/atom-apps/auth/database/query"
 	"github.com/atom-apps/auth/modules/auth"
 	"github.com/atom-providers/casdoor"
 	"github.com/atom-providers/cert"
-	"github.com/atom-providers/jwt"
+	databasePostgres "github.com/atom-providers/database-postgres"
 	serviceHttp "github.com/atom-providers/service-http"
 	"github.com/rogeecn/atom"
 	"github.com/spf13/cobra"
@@ -17,8 +20,9 @@ import (
 
 func main() {
 	providers := serviceHttp.Default(
+		query.DefaultProvider(),
 		cert.DefaultProvider(),
-		jwt.DefaultProvider(),
+		databasePostgres.DefaultProvider(),
 		casdoor.DefaultProvider(),
 	).With(
 		auth.Providers(),

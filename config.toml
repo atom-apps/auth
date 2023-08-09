@@ -1,6 +1,13 @@
 [Http]
 Port = 9800
 
+[Postgres]
+Username = "postgres"
+Password = "xixi@0202"
+Database = "atom"
+Host = "10.58.144.6"
+Port = 30432
+
 [JWT]
 SignKey = "helloworld"
 
