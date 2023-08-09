@@ -89,6 +89,10 @@ func (dao *UserMappingDao) GetByID(ctx context.Context, id int64) (*models.UserM
 	return dao.Context(ctx).Where(dao.query.UserMapping.ID.Eq(id)).First()
 }
 
+func (dao *UserMappingDao) GetByName(ctx context.Context, name string) (*models.UserMapping, error) {
+	return dao.Context(ctx).Where(dao.query.UserMapping.Name.Eq(name)).First()
+}
+
 func (dao *UserMappingDao) GetByIDs(ctx context.Context, ids []int64) ([]*models.UserMapping, error) {
 	return dao.Context(ctx).Where(dao.query.UserMapping.ID.In(ids...)).Find()
 }

@@ -77,3 +77,8 @@ func (svc *TenantUserService) UpdateFromModel(ctx context.Context, model *models
 func (svc *TenantUserService) Delete(ctx context.Context, id int64) error {
 	return svc.tenantUserDao.Delete(ctx, id)
 }
+
+// GetByUserID
+func (svc *TenantUserService) GetByUserID(ctx context.Context, userID int64) (*models.TenantUser, error) {
+	return svc.tenantUserDao.GetByUserID(ctx, userID)
+}

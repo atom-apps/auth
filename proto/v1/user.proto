@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+option go_package = "github.com/atom-apps/auth/proto/v1";
+package proto.v1;
+
+// import "google/protobuf/any.proto";
+// import "google/protobuf/empty.proto";
+
+service UserService {
+  rpc GetMapping(GetMappingRequest) returns (GetMappingResponse);
+}
+
+// GetMapping
+message GetMappingRequest { string name = 1; }
+
+message GetMappingResponse {
+  int64 id = 1;
+  string name = 2;
+  string uuid = 3;
+  int64 tenant_id = 4;
+  string tenant_name = 5;
+  bool is_tenant_admin = 6;
+}

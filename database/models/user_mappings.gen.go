@@ -20,6 +20,7 @@ type UserMapping struct {
 	UpdatedAt time.Time      `gorm:"column:updated_at;type:timestamp with time zone" json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"column:deleted_at;type:timestamp with time zone" json:"deleted_at"`
 	UUID      string         `gorm:"column:uuid;type:character varying(128)" json:"uuid"`
+	Name      string         `gorm:"column:name;type:character varying(128)" json:"name"`
 }
 
 func (*UserMapping) TableName(namer schema.Namer) string {

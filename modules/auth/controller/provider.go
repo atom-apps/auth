@@ -65,5 +65,18 @@ func Provide(opts ...opt.Option) error {
 		return err
 	}
 
+	if err := container.Container.Provide(func(
+		door *casdoorsdk.Client,
+		userMappingSvc *service.UserMappingService,
+	) (*WebhookController, error) {
+		obj := &WebhookController{
+			door:           door,
+			userMappingSvc: userMappingSvc,
+		}
+		return obj, nil
+	}); err != nil {
+		return err
+	}
+
 	return nil
 }

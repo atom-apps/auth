@@ -9,6 +9,7 @@ func (m *Migration20230809_100328CreateUserMapping) table() interface{} {
 	type UserMapping struct {
 		gorm.Model
 		Uuid string `gorm:"size:128"`
+		Name string `gorm:"size:128"`
 	}
 
 	return &UserMapping{}

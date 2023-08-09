@@ -19,6 +19,10 @@ func (svc *UserMappingService) GetByID(ctx context.Context, id int64) (*models.U
 	return svc.userMappingDao.GetByID(ctx, id)
 }
 
+func (svc *UserMappingService) GetByName(ctx context.Context, name string) (*models.UserMapping, error) {
+	return svc.userMappingDao.GetByName(ctx, name)
+}
+
 // CreateFromModel
 func (svc *UserMappingService) CreateFromModel(ctx context.Context, model *models.UserMapping) error {
 	return svc.userMappingDao.Create(ctx, model)

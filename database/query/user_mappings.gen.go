@@ -32,6 +32,7 @@ func newUserMapping(db *gorm.DB, opts ...gen.DOOption) userMapping {
 	_userMapping.UpdatedAt = field.NewTime(tableName, "updated_at")
 	_userMapping.DeletedAt = field.NewField(tableName, "deleted_at")
 	_userMapping.UUID = field.NewString(tableName, "uuid")
+	_userMapping.Name = field.NewString(tableName, "name")
 
 	_userMapping.fillFieldMap()
 
@@ -47,6 +48,7 @@ type userMapping struct {
 	UpdatedAt field.Time
 	DeletedAt field.Field
 	UUID      field.String
+	Name      field.String
 
 	fieldMap map[string]field.Expr
 }
@@ -68,6 +70,7 @@ func (u *userMapping) updateTableName(table string) *userMapping {
 	u.UpdatedAt = field.NewTime(table, "updated_at")
 	u.DeletedAt = field.NewField(table, "deleted_at")
 	u.UUID = field.NewString(table, "uuid")
+	u.Name = field.NewString(table, "name")
 
 	u.fillFieldMap()
 
@@ -94,12 +97,13 @@ func (u *userMapping) GetFieldByName(fieldName string) (field.OrderExpr, bool) {
 }
 
 func (u *userMapping) fillFieldMap() {
-	u.fieldMap = make(map[string]field.Expr, 5)
+	u.fieldMap = make(map[string]field.Expr, 6)
 	u.fieldMap["id"] = u.ID
 	u.fieldMap["created_at"] = u.CreatedAt
 	u.fieldMap["updated_at"] = u.UpdatedAt
 	u.fieldMap["deleted_at"] = u.DeletedAt
 	u.fieldMap["uuid"] = u.UUID
+	u.fieldMap["name"] = u.Name
 }
 
 func (u userMapping) clone(db *gorm.DB) userMapping {

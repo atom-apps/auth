@@ -135,3 +135,8 @@ func (dao *TenantUserDao) FirstByQueryFilter(
 	tenantUserQuery = dao.decorateSortQueryFilter(tenantUserQuery, sortFilter)
 	return tenantUserQuery.First()
 }
+
+// GetByUserID
+func (dao *TenantUserDao) GetByUserID(ctx context.Context, userID int64) (*models.TenantUser, error) {
+	return dao.Context(ctx).Where(dao.query.TenantUser.UserID.Eq(userID)).First()
+}
